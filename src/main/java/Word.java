@@ -2,14 +2,20 @@ import static java.util.Objects.isNull;
 
 public class Word {
 
-    private String answer;
+    private Answer answer;
+    private Input input;
 
-    public Word(String answer) {
+    public Word() {
+        this.answer = new Answer();
+    }
+
+    public Word(Answer answer) {
         this.answer = answer;
     }
 
-    public Word() {
-        this.answer = "APPLE";
+    public Word(Input input, Answer answer) {
+        this.input = input;
+        this.answer = answer;
     }
 
     public void valid(String input) {
@@ -30,7 +36,7 @@ public class Word {
     }
 
     public void validLength(String input) throws IllegalArgumentException {
-        if (input.length() != WordCondition.입력_제한.getValue()) {
+        if (input.length() != WordCondition.입력_제한_길이.ordinal()) {
             throw new IllegalArgumentException("길이가 일치하지 않습니다.");
         }
     }
@@ -41,11 +47,12 @@ public class Word {
         }
     }
 
-    public String getAnswer() {
-        return answer;
-    }
+    // 입력 : APPLE
+    // 답 : APPLE
+    public void compareAnswer() {
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+
+
+
     }
 }
