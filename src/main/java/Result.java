@@ -15,6 +15,7 @@ public class Result {
     public void addBoard() {
         this.boards[currentBoardsIndex] = this.board;
         currentBoardsIndex++;
+        this.board = new StringBuilder();
     }
 
     public String getBoard() {

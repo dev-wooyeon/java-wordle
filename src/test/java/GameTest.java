@@ -39,7 +39,7 @@ class GameTest {
         result.setBoard(board);
         Game game = new Game(result);
         // when
-        game.checkedFinished();
+        game.updateFinished();
         // then
         Assertions.assertTrue(game.isFinished());
     }
@@ -52,7 +52,7 @@ class GameTest {
         result.setBoard(board);
         Game game = new Game(result);
         // when
-        game.checkedFinished();
+        game.updateFinished();
         // then
         Assertions.assertFalse(game.isFinished());
     }

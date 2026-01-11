@@ -11,12 +11,12 @@ public class Client {
     }
 
     public String run() {
-
-        game.checkedFinished();
         game.checkedTryCount();
 
         word.valid();
         word.compareAnswer();
+
+        game.updateFinished();
 
         result.addBoard();
 

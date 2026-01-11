@@ -7,8 +7,11 @@ public class Game {
         this.result = result;
     }
 
-    public void checkedFinished() {
+    public void updateFinished() {
         if (ResultValues.correct().equals(result.getBoard())) {
+            this.isFinished = Boolean.TRUE;
+        }
+        if (WordCondition.입력_제한_횟수.getValue() == result.getCurrentTryCount()) {
             this.isFinished = Boolean.TRUE;
         }
     }
