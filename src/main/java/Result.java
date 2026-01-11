@@ -25,4 +25,11 @@ public class Result {
         return currentBoardsIndex + 1;
     }
 
+    public void setCurrentBoardsIndex(int currentBoardsIndex) {
+        this.currentBoardsIndex = currentBoardsIndex;
+    }
+
+    public void setBoard(StringBuilder board) {
+        this.board = board;
+    }
 }

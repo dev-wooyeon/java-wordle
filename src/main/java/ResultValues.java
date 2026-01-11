@@ -19,4 +19,9 @@ public enum ResultValues {
         return String.valueOf(ResultValues.그린.getValue())
             .repeat(Math.max(0, WordCondition.입력_제한_길이.getValue()));
     }
+
+    public static String inCorrect() {
+        return String.valueOf(ResultValues.그레이.getValue())
+            .repeat(Math.max(0, WordCondition.입력_제한_길이.getValue()));
+    }
 }
