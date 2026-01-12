@@ -73,5 +73,60 @@ class WordTest {
 
     }
 
+    @Test
+    void valid_정상_입력() {
+        // given
+        Result result = new Result();
+        Answer answer = new Answer();
+        Input input = new Input("apple", result);
+        Word word = new Word(input, answer);
+        // when & then
+        Assertions.assertDoesNotThrow(() -> word.valid());
+    }
+
+    @Test
+    void valid_null_입력() {
+        // given
+        Result result = new Result();
+        Answer answer = new Answer();
+        Input input = new Input(null, result);
+        Word word = new Word(input, answer);
+        // when & then
+        Assertions.assertThrows(IllegalArgumentException.class, () -> word.valid());
+    }
+
+    @Test
+    void valid_길이_불일치() {
+        // given
+        Result result = new Result();
+        Answer answer = new Answer();
+        Input input = new Input("a", result);
+        Word word = new Word(input, answer);
+        // when & then
+        Assertions.assertThrows(IllegalArgumentException.class, () -> word.valid());
+    }
+
+    @Test
+    void valid_알파벳_외_문자() {
+        // given
+        Result result = new Result();
+        Answer answer = new Answer();
+        Input input = new Input("appl1", result);
+        Word word = new Word(input, answer);
+        // when & then
+        Assertions.assertThrows(IllegalArgumentException.class, () -> word.valid());
+    }
+
+    @Test
+    void valid_사전_없음() {
+        // given
+        Result result = new Result();
+        Answer answer = new Answer();
+        Input input = new Input("zzzzz", result);
+        Word word = new Word(input, answer);
+        // when & then
+        Assertions.assertDoesNotThrow(() -> word.valid());
+    }
+
 
 }

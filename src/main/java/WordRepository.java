@@ -7,6 +7,7 @@ import java.util.*;
 public class WordRepository {
 
     private static final Set<String> wordSet = new HashSet<>();
+    private static final List<String> wordList = new ArrayList<>();
 
     // 정적 초기화 블록 - 클래스가 처음 로드될 때 자동 실행
     static {
@@ -27,6 +28,7 @@ public class WordRepository {
 
                 if (!word.isEmpty()) {
                     wordSet.add(word);
+                    wordList.add(word);
                 }
             }
         } catch (IOException e) {
@@ -37,5 +39,9 @@ public class WordRepository {
 
     public static boolean hasWord(String word) {
         return wordSet.contains(word);
+    }
+
+    public static List<String> getWordList() {
+        return wordList;
     }
 }

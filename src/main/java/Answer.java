@@ -2,8 +2,9 @@ public class Answer {
 
     private String value;
 
+    // 기본 생성자는 apple로 생성한다.
     public Answer(){
-        this.value = "APPLE";
+        this.value = "apple";
     }
 
     public Answer(String value){
