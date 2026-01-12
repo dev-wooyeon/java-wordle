@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-
+        WordRepository wordRepository = new WordRepository();
         Output output = new Output();
 
         System.out.println(output.getWelcomeMessage());

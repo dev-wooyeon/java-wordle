@@ -14,7 +14,8 @@ public class Word {
     }
 
     public void valid() {
-        // TODO. 정책 논의 필요 (횟수 차감 여부)
+        // TODO. 정책 논의 필요 (횟수 차감 여부) -> 차감 해버리기
+        validWord(input.getValue());
 
         validNull(input.getValue());
 
@@ -22,6 +23,12 @@ public class Word {
 
         validAlphabet(input.getValue());
 
+    }
+
+    public void validWord(String input) {
+        if(!WordRepository.hasWord(input)){
+            System.out.println(Output.getHasNotWordRepository());
+        }
     }
 
     public void validNull(String input) {

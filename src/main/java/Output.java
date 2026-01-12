@@ -24,4 +24,8 @@ public class Output {
         return result.toString();
    }
 
+   public static String getHasNotWordRepository(){
+        return "답안은 `words.txt`에 존재하는 단어여야 합니다";
+   }
+
 }
