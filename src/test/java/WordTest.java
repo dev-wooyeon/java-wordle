@@ -45,4 +45,33 @@ class WordTest {
         Assertions.assertEquals("⬜⬜⬜⬜⬜", result.getBoard());
     }
 
+    @Test
+    void 중복판정_성공() {
+        //given
+        Result result = new Result();
+        Answer answer = new Answer("APPLE");
+        Input input = new Input("AAABB", result);
+        Word word = new Word(input, answer);
+        // when
+        word.compareAnswer();
+        // then
+        Assertions.assertEquals("🟩⬜⬜⬜⬜", result.getBoard());
+
+    }
+
+    @Test
+    void 중복판정_실패() {
+        //given
+        Result result = new Result();
+        Answer answer = new Answer("APPLE");
+        Input input = new Input("AAABB", result);
+        Word word = new Word(input, answer);
+        // when
+        word.compareAnswer();
+        // then
+        Assertions.assertNotEquals("🟩🟨⬜⬜⬜", result.getBoard());
+
+    }
+
+
 }
