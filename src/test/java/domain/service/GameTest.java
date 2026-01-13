@@ -1,25 +1,42 @@
 package domain.service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import application.port.OutputPort;
 import domain.model.Result;
 import domain.model.ResultValues;
-import domain.service.Game;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
+
+    // Mockup
+    private OutputPort outputPort = new OutputPort() {
+        @Override
+        public String getWelcomeMessage() { return ""; }
+        @Override
+        public String getInputInfoMessage() { return ""; }
+        @Override
+        public String getBoards(StringBuilder[] boards) { return ""; }
+        @Override
+        public String getHasNotWordRepository() { return ""; }
+        @Override
+        public String getInvalidInputMessage() { return ""; }
+        @Override
+        public String getLengthMismatchMessage() { return ""; }
+        @Override
+        public String getNotAlphabetMessage() { return ""; }
+        @Override
+        public String getTryCountExceededMessage() { return ""; }
+    };
 
     @Test
     public void 종료_조건_테스트_6턴_이내() {
         // given
         Result result = new Result();
         result.setCurrentBoardsIndex(5);
-        Game game = new Game(result);
+        Game game = new Game(result, outputPort);
         // when
         // then
-        assertDoesNotThrow(game::checkedTryCount);
+        Assertions.assertTrue(game.checkedTryCount());
     }
 
 
@@ -28,12 +45,11 @@ class GameTest {
         // given
         Result result = new Result();
         result.setCurrentBoardsIndex(6);
-        Game game = new Game(result);
+        Game game = new Game(result, outputPort);
         // when
-        RuntimeException exception = assertThrows(RuntimeException.class,
-            game::checkedTryCount);
+        boolean resultChecked = game.checkedTryCount();
         // then
-        Assertions.assertEquals("입력 제한 횟수를 넘어 갑니다", exception.getMessage());
+        Assertions.assertFalse(resultChecked);
     }
 
     @Test
@@ -42,7 +58,7 @@ class GameTest {
         Result result = new Result();
         StringBuilder board = new StringBuilder(ResultValues.correct());
         result.setBoard(board);
-        Game game = new Game(result);
+        Game game = new Game(result, outputPort);
         // when
         game.updateFinished();
         // then
@@ -55,7 +71,7 @@ class GameTest {
         Result result = new Result();
         StringBuilder board = new StringBuilder(ResultValues.inCorrect());
         result.setBoard(board);
-        Game game = new Game(result);
+        Game game = new Game(result, outputPort);
         // when
         game.updateFinished();
         // then

@@ -1,5 +1,6 @@
 package domain.service;
 
+import application.port.OutputPort;
 import domain.model.Result;
 import domain.model.ResultValues;
 import domain.model.WordCondition;
@@ -7,10 +8,12 @@ import domain.model.WordCondition;
 public class Game {
 
     private final Result result;
+    private final OutputPort outputPort;
     private boolean isFinished;
 
-    public Game(Result result) {
+    public Game(Result result, OutputPort outputPort) {
         this.result = result;
+        this.outputPort = outputPort;
     }
 
     public void updateFinished() {
@@ -22,10 +25,12 @@ public class Game {
         }
     }
 
-    public void checkedTryCount() {
+    public boolean checkedTryCount() {
         if (WordCondition.입력_제한_횟수.getValue() < result.getCurrentTryCount()) {
-            throw new RuntimeException("입력 제한 횟수를 넘어 갑니다");
+            System.out.println(this.outputPort.getTryCountExceededMessage());
+            return false;
         }
+        return true;
     }
 
     public boolean isFinished() {

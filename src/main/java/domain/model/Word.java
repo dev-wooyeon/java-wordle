@@ -22,40 +22,49 @@ public class Word {
         this.outputPort = outputPort;
     }
 
-    public void valid() {
+    public boolean valid() {
         // TODO. 정책 논의 필요 (횟수 차감 여부) -> 차감 해버리기
-        validWord(input.getValue());
+        if (!validWord(input.getValue())) return false;
 
-        validNull(input.getValue());
+        if (!validNull(input.getValue())) return false;
 
-        validLength(input.getValue());
+        if (!validLength(input.getValue())) return false;
 
-        validAlphabet(input.getValue());
+        if (!validAlphabet(input.getValue())) return false;
 
+        return true;
     }
 
-    public void validWord(String input) {
+    public boolean validWord(String input) {
         if(!this.wordRepository.hasWord(input)){
             System.out.println(this.outputPort.getHasNotWordRepository());
+            return false;
         }
+        return true;
     }
 
-    public void validNull(String input) {
+    public boolean validNull(String input) {
         if (isNull(input)) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+            System.out.println(this.outputPort.getInvalidInputMessage());
+            return false;
         }
+        return true;
     }
 
-    public void validLength(String input) throws IllegalArgumentException {
+    public boolean validLength(String input) {
         if (input.length() != WordCondition.입력_제한_길이.getValue()) {
-            throw new IllegalArgumentException("길이가 일치하지 않습니다.");
+            System.out.println(this.outputPort.getLengthMismatchMessage());
+            return false;
         }
+        return true;
     }
 
-    public void validAlphabet(String input) {
+    public boolean validAlphabet(String input) {
         if (!input.matches("(?i)[a-z]+")) {
-            throw new IllegalArgumentException("단어는 알파벳이어야 합니다.");
+            System.out.println(this.outputPort.getNotAlphabetMessage());
+            return false;
         }
+        return true;
     }
 
     // 입력 : APPLE
@@ -93,7 +102,7 @@ public class Word {
                 continue;
             }
 
-            char in = input.charAt(i);
+            char in = Character.toLowerCase(input.charAt(i));
             int count = remain.getOrDefault(in, 0);
 
             if (count > 0) {
@@ -111,8 +120,8 @@ public class Word {
     private static void checkedGreen(int length, String input, String answer, ResultValues[] results,
         Map<Character, Integer> remain) {
         for (int i = 0; i < length; i++) {
-            char in = input.charAt(i);
-            char ans = answer.charAt(i);
+            char in = Character.toLowerCase(input.charAt(i));
+            char ans = Character.toLowerCase(answer.charAt(i));
 
             if (in == ans) {
                 results[i] = ResultValues.그린;
@@ -125,7 +134,7 @@ public class Word {
         // 정답 문자 개수 카운트>
         HashMap<Character, Integer> remain = new HashMap<>();
         for (int i = 0; i < length; i++) {
-            char c = answer.charAt(i);
+            char c = Character.toLowerCase(answer.charAt(i));
             remain.put(c, remain.getOrDefault(c, 0) + 1);
         }
 

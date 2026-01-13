@@ -99,7 +99,7 @@ class WordTest {
         Input input = new Input("apple", result);
         Word word = new Word(input, answer, wordRepository, outputPort);
         // when & then
-        Assertions.assertDoesNotThrow(() -> word.valid());
+        Assertions.assertTrue(word.valid());
     }
 
     @Test
@@ -112,7 +112,7 @@ class WordTest {
         Input input = new Input(null, result);
         Word word = new Word(input, answer, wordRepository, outputPort);
         // when & then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> word.valid());
+        Assertions.assertFalse(word.valid());
     }
 
     @Test
@@ -125,7 +125,7 @@ class WordTest {
         Input input = new Input("a", result);
         Word word = new Word(input, answer, wordRepository, outputPort);
         // when & then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> word.valid());
+        Assertions.assertFalse(word.valid());
     }
 
     @Test
@@ -138,7 +138,7 @@ class WordTest {
         Input input = new Input("appl1", result);
         Word word = new Word(input, answer, wordRepository, outputPort);
         // when & then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> word.valid());
+        Assertions.assertFalse(word.valid());
     }
 
     @Test
@@ -151,7 +151,7 @@ class WordTest {
         Input input = new Input("zzzzz", result);
         Word word = new Word(input, answer, wordRepository, outputPort);
         // when & then
-        Assertions.assertDoesNotThrow(() -> word.valid());
+        Assertions.assertFalse(word.valid());
     }
 
 

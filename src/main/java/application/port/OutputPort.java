@@ -1,7 +1,5 @@
 package application.port;
 
-import java.util.Objects;
-
 public interface OutputPort {
 
     String getWelcomeMessage();
@@ -11,4 +9,12 @@ public interface OutputPort {
     String getBoards(StringBuilder[] boards);
 
     String getHasNotWordRepository();
+
+    String getInvalidInputMessage();
+
+    String getLengthMismatchMessage();
+
+    String getNotAlphabetMessage();
+
+    String getTryCountExceededMessage();
 }

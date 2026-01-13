@@ -20,9 +20,14 @@ public class Client {
     }
 
     public String run() {
-        game.checkedTryCount();
+        if (!game.checkedTryCount()) {
+            return "";
+        }
 
-        word.valid();
+        if (!word.valid()) {
+            return "";
+        }
+
         word.compareAnswer();
 
         game.updateFinished();

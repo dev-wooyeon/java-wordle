@@ -23,7 +23,7 @@ public class App {
         System.out.println(outputPort.getWelcomeMessage());
 
         Result result = new Result();
-        Game game = new Game(result);
+        Game game = new Game(result, outputPort);
         AnswerSelector answerSelector = new AnswerSelector(wordRepository);
         String selectedAnswer = answerSelector.selectAnswer();
         Answer answer = new Answer(selectedAnswer);
