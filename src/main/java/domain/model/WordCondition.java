@@ -1,9 +1,8 @@
-
 package domain.model;
 
 public enum WordCondition {
-    입력_제한_길이(5),
-    입력_제한_횟수(6),
+    WORD_LENGTH(5),
+    MAX_TRY_COUNT(6),
     ;
 
     private final int value;
@@ -12,7 +11,7 @@ public enum WordCondition {
         return value;
     }
 
-    WordCondition(int length) {
-        this.value = length;
+    WordCondition(int value) {
+        this.value = value;
     }
 }

@@ -2,9 +2,9 @@ package domain.model;
 
 public enum ResultValues {
 
-    그린("🟩"),
-    옐로우("🟨"),
-    그레이("⬜"),
+    GREEN("🟩"),
+    YELLOW("🟨"),
+    GRAY("⬜"),
     ;
 
     private final String value;
@@ -17,13 +17,8 @@ public enum ResultValues {
         return value;
     }
 
-    public static String correct() {
-        return String.valueOf(ResultValues.그린.getValue())
-            .repeat(Math.max(0, WordCondition.입력_제한_길이.getValue()));
-    }
-
-    public static String inCorrect() {
-        return String.valueOf(ResultValues.그레이.getValue())
-            .repeat(Math.max(0, WordCondition.입력_제한_길이.getValue()));
+    public static String getCorrectAnswerLine() {
+        return String.valueOf(ResultValues.GREEN.getValue())
+                .repeat(Math.max(0, WordCondition.WORD_LENGTH.getValue()));
     }
 }

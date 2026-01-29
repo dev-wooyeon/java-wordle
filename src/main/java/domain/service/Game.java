@@ -7,30 +7,24 @@ import domain.model.WordCondition;
 
 public class Game {
 
-    private final Result result;
-    private final OutputPort outputPort;
+    private final Result gameResult;
     private boolean isFinished;
 
-    public Game(Result result, OutputPort outputPort) {
-        this.result = result;
-        this.outputPort = outputPort;
+    public Game(Result gameResult) {
+        this.gameResult = gameResult;
     }
 
     public void updateFinished() {
-        if (ResultValues.correct().equals(result.getBoard())) {
-            this.isFinished = Boolean.TRUE;
+        if (ResultValues.getCorrectAnswerLine().equals(gameResult.getLastBoard())) {
+            this.isFinished = true;
         }
-        if (WordCondition.입력_제한_횟수.getValue() == result.getCurrentTryCount()) {
-            this.isFinished = Boolean.TRUE;
+        if (WordCondition.MAX_TRY_COUNT.getValue() < gameResult.getCurrentTryCount()) {
+            this.isFinished = true;
         }
     }
 
-    public boolean checkedTryCount() {
-        if (WordCondition.입력_제한_횟수.getValue() < result.getCurrentTryCount()) {
-            System.out.println(this.outputPort.getTryCountExceededMessage());
-            return false;
-        }
-        return true;
+    public boolean canTry() {
+        return gameResult.getCurrentTryCount() <= WordCondition.MAX_TRY_COUNT.getValue();
     }
 
     public boolean isFinished() {

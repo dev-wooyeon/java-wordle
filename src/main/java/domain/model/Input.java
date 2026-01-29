@@ -2,21 +2,13 @@ package domain.model;
 
 public class Input {
 
-    private String value;
-    private Result result;
+    private final String inputValue;
 
-    public Input(String value, Result result) {
-        this.value = value;
-        this.result = result;
+    public Input(String inputValue) {
+        this.inputValue = inputValue;
     }
 
-    public void saveTile(String tile){
-        result.addTile(tile);
+    public String getInputValue() {
+        return this.inputValue;
     }
-
-    public String getValue() {
-        return this.value;
-    }
-
-
 }

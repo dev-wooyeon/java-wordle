@@ -11,133 +11,106 @@ import java.util.Map;
 public class Word {
 
     private Answer answer;
-    private Input input;
     private WordRepository wordRepository;
-    private OutputPort outputPort;
 
-    public Word(Input input, Answer answer, WordRepository wordRepository, OutputPort outputPort) {
-        this.input = input;
+    public Word(Answer answer, WordRepository wordRepository) {
         this.answer = answer;
         this.wordRepository = wordRepository;
-        this.outputPort = outputPort;
     }
 
-    public boolean valid() {
-        // TODO. 정책 논의 필요 (횟수 차감 여부) -> 차감 해버리기
-        if (!validWord(input.getValue())) return false;
+    public ValidationStatus validate(Input input) {
+        if (!isNotNull(input.getInputValue()))
+            return ValidationStatus.NULL_INPUT;
+        if (!hasValidLength(input.getInputValue()))
+            return ValidationStatus.INVALID_LENGTH;
+        if (!isAlphabetical(input.getInputValue()))
+            return ValidationStatus.NOT_ALPHABET;
+        if (!isWithinDictionary(input.getInputValue()))
+            return ValidationStatus.NOT_IN_DICTIONARY;
 
-        if (!validNull(input.getValue())) return false;
-
-        if (!validLength(input.getValue())) return false;
-
-        if (!validAlphabet(input.getValue())) return false;
-
-        return true;
+        return ValidationStatus.VALID;
     }
 
-    public boolean validWord(String input) {
-        if(!this.wordRepository.hasWord(input)){
-            System.out.println(this.outputPort.getHasNotWordRepository());
-            return false;
-        }
-        return true;
+    private boolean isWithinDictionary(String input) {
+        return this.wordRepository.hasWord(input);
     }
 
-    public boolean validNull(String input) {
-        if (isNull(input)) {
-            System.out.println(this.outputPort.getInvalidInputMessage());
-            return false;
-        }
-        return true;
+    private boolean isNotNull(String input) {
+        return !isNull(input);
     }
 
-    public boolean validLength(String input) {
-        if (input.length() != WordCondition.입력_제한_길이.getValue()) {
-            System.out.println(this.outputPort.getLengthMismatchMessage());
-            return false;
-        }
-        return true;
+    private boolean hasValidLength(String input) {
+        return input.length() == WordCondition.WORD_LENGTH.getValue();
     }
 
-    public boolean validAlphabet(String input) {
-        if (!input.matches("(?i)[a-z]+")) {
-            System.out.println(this.outputPort.getNotAlphabetMessage());
-            return false;
-        }
-        return true;
+    private boolean isAlphabetical(String input) {
+        return input.matches("(?i)[a-z]+");
     }
 
-    // 입력 : APPLE
-    // 답 : AIRPO
-    public void compareAnswer() {
-        String answer = this.answer.getValue();
-        String input = this.input.getValue();
-        int length = answer.length();
+    // Input: APPLE
+    // Answer: AIRPO
+    public ResultValues[] compareAnswer(Input input) {
+        String answerValue = this.answer.getAnswerValue();
+        String inputValue = input.getInputValue();
+        int length = answerValue.length();
 
-        ResultValues[] results = new ResultValues[length];
+        ResultValues[] resultArray = new ResultValues[length];
 
-        // 답안지의 문자 개수를 카운팅하여 Map에 저장한다.
-        Map<Character, Integer> remain = getAnswerRemainCount(length, answer);
+        // Count the number of each character in the answer and store it in a map.
+        Map<Character, Integer> remainingCountMap = getAnswerRemainingCountMap(length, answerValue);
 
-        // 1차: 초록색 판정
-        checkedGreen(length, input, answer, results, remain);
+        // First pass: Identify GREEN tiles (correct character at the correct position).
+        markGreenTiles(length, inputValue, answerValue, resultArray, remainingCountMap);
 
-        // 2차: 노란색 / 회색 판정
-        checkedNotGreen(length, results, input, remain);
+        // Second pass: Identify YELLOW (correct character, wrong position) and GRAY
+        // tiles.
+        markYellowAndGrayTiles(length, resultArray, inputValue, remainingCountMap);
 
-        // 결과 저장
-        saveResults(results);
+        return resultArray;
     }
 
-    private void saveResults(ResultValues[] results) {
-        for (ResultValues r : results) {
-            this.input.saveTile(r.getValue());
-        }
-    }
-
-    private static void checkedNotGreen(int length, ResultValues[] results, String input,
-        Map<Character, Integer> remain) {
+    private static void markYellowAndGrayTiles(int length, ResultValues[] resultArray, String input,
+            Map<Character, Integer> remainingCountMap) {
         for (int i = 0; i < length; i++) {
-            if (results[i] != null) {
+            if (resultArray[i] != null) {
                 continue;
             }
 
-            char in = Character.toLowerCase(input.charAt(i));
-            int count = remain.getOrDefault(in, 0);
+            char inputChar = Character.toLowerCase(input.charAt(i));
+            int count = remainingCountMap.getOrDefault(inputChar, 0);
 
             if (count > 0) {
-                results[i] = ResultValues.옐로우;
-                remain.put(in, count - 1);
+                resultArray[i] = ResultValues.YELLOW;
+                remainingCountMap.put(inputChar, count - 1);
             }
-
 
             if (count == 0) {
-                results[i] = ResultValues.그레이;
+                resultArray[i] = ResultValues.GRAY;
             }
         }
     }
 
-    private static void checkedGreen(int length, String input, String answer, ResultValues[] results,
-        Map<Character, Integer> remain) {
+    private static void markGreenTiles(int length, String input, String answer, ResultValues[] resultArray,
+            Map<Character, Integer> remainingCountMap) {
         for (int i = 0; i < length; i++) {
-            char in = Character.toLowerCase(input.charAt(i));
-            char ans = Character.toLowerCase(answer.charAt(i));
+            char inputChar = Character.toLowerCase(input.charAt(i));
+            char answerChar = Character.toLowerCase(answer.charAt(i));
 
-            if (in == ans) {
-                results[i] = ResultValues.그린;
-                remain.put(in, remain.get(in) - 1); // 소비
+            if (inputChar == answerChar) {
+                resultArray[i] = ResultValues.GREEN;
+                remainingCountMap.put(inputChar, remainingCountMap.get(inputChar) - 1); // consume character count
             }
         }
     }
 
-    public HashMap<Character, Integer> getAnswerRemainCount(int length, String answer) {
-        // 정답 문자 개수 카운트>
-        HashMap<Character, Integer> remain = new HashMap<>();
+    public HashMap<Character, Integer> getAnswerRemainingCountMap(int length, String answer) {
+        // Count the frequency of each character in the answer word.
+        HashMap<Character, Integer> remainingCountMap = new HashMap<>();
         for (int i = 0; i < length; i++) {
             char c = Character.toLowerCase(answer.charAt(i));
-            remain.put(c, remain.getOrDefault(c, 0) + 1);
+            remainingCountMap.put(c, remainingCountMap.getOrDefault(c, 0) + 1);
         }
 
-        return remain;
+        return remainingCountMap;
     }
 }

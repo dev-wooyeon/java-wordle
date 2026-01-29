@@ -2,18 +2,18 @@ package domain.model;
 
 public class Answer {
 
-    private String value;
+    private String answerValue;
 
-    // 기본 생성자는 apple로 생성한다.
-    public Answer(){
-        this.value = "apple";
+    // Default constructor creates "apple".
+    public Answer() {
+        this.answerValue = "apple";
     }
 
-    public Answer(String value){
-        this.value = value;
+    public Answer(String answerValue) {
+        this.answerValue = answerValue;
     }
 
-    public String getValue(){
-        return this.value;
+    public String getAnswerValue() {
+        return this.answerValue;
     }
 }

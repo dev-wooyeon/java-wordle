@@ -1,42 +1,33 @@
 package domain.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Result {
 
-    private StringBuilder board;
-    private StringBuilder[] boards = new StringBuilder[WordCondition.입력_제한_횟수.getValue()];
-    private int currentBoardsIndex = 0;
+    private final List<String> boardList = new ArrayList<>();
 
-    public Result() {
-        this.board = new StringBuilder();
+    public void addRecord(ResultValues[] resultArray) {
+        StringBuilder rowStringBuilder = new StringBuilder();
+        for (ResultValues resultValue : resultArray) {
+            rowStringBuilder.append(resultValue.getValue());
+        }
+        this.boardList.add(rowStringBuilder.toString());
     }
 
-    public void addTile(String tile) {
-        this.board.append(tile);
-    }
-
-    public void addBoard() {
-        this.boards[currentBoardsIndex] = this.board;
-        currentBoardsIndex++;
-        this.board = new StringBuilder();
-    }
-
-    public String getBoard() {
-        return this.board.toString();
+    public String getLastBoard() {
+        if (boardList.isEmpty()) {
+            return "";
+        }
+        return boardList.get(boardList.size() - 1);
     }
 
     public int getCurrentTryCount() {
-        return currentBoardsIndex + 1;
+        return boardList.size() + 1;
     }
 
-    public void setCurrentBoardsIndex(int currentBoardsIndex) {
-        this.currentBoardsIndex = currentBoardsIndex;
-    }
-
-    public void setBoard(StringBuilder board) {
-        this.board = board;
-    }
-
-    public StringBuilder[] getBoards() {
-        return boards;
+    public List<String> getBoardList() {
+        return Collections.unmodifiableList(boardList);
     }
 }

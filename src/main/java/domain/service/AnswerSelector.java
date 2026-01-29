@@ -19,8 +19,8 @@ public class AnswerSelector {
     }
 
     private int calculateIndex(int dayOfYear) {
-        int length = WordCondition.입력_제한_길이.getValue();
-        int count = WordCondition.입력_제한_횟수.getValue();
-        return (dayOfYear - 1) % (length * count);
+        int wordLength = WordCondition.WORD_LENGTH.getValue();
+        int maxTryCount = WordCondition.MAX_TRY_COUNT.getValue();
+        return (dayOfYear - 1) % (wordLength * maxTryCount);
     }
 }

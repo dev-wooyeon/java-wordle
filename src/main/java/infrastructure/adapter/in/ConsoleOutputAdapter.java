@@ -3,16 +3,16 @@ package infrastructure.adapter.in;
 import application.port.OutputPort;
 
 import domain.model.WordCondition;
+import java.util.List;
 import java.util.Objects;
 
 public class ConsoleOutputAdapter implements OutputPort {
 
     @Override
     public String getWelcomeMessage() {
-        int inputMaxCount = WordCondition.입력_제한_횟수.getValue();
+        int inputMaxTryCount = WordCondition.MAX_TRY_COUNT.getValue();
         return String.format("WORDLE을 %d 번 만에 맞춰 보세요.\n"
-            + "시도의 결과는 타일의 색 변화로 나타납니다. "
-            , inputMaxCount);
+                + "시도의 결과는 타일의 색 변화로 나타납니다. ", inputMaxTryCount);
 
     }
 
@@ -22,18 +22,18 @@ public class ConsoleOutputAdapter implements OutputPort {
     }
 
     @Override
-    public String getBoards(StringBuilder[] boards) {
-        StringBuilder result = new StringBuilder();
-        for (StringBuilder board : boards) {
+    public String getBoardList(List<String> boardList) {
+        StringBuilder boardStringBuilder = new StringBuilder();
+        for (String board : boardList) {
             if (Objects.nonNull(board)) {
-                result.append(board).append("\n");
+                boardStringBuilder.append(board).append("\n");
             }
         }
-        return result.toString();
+        return boardStringBuilder.toString();
     }
 
     @Override
-    public String getHasNotWordRepository(){
+    public String getHasNotWordRepository() {
         return "답안은 `words.txt`에 존재하는 단어여야 합니다";
     }
 
