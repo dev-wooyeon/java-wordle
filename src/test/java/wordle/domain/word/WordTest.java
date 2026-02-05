@@ -32,7 +32,7 @@ class WordTest {
         WordRepository wordRepository = new FileWordRepository();
         GameResult result = new GameResult();
         Answer answer = new Answer("apple");
-        GameInput input = new GameInput(answer.getValue());
+        GameInput input = new GameInput(answer.value());
         Word word = new Word(answer, wordRepository);
 
         MatchResult[] results = word.match(input);

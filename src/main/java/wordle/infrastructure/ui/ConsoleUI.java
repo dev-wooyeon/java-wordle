@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class ConsoleUI implements OutputPort {
 
-    private static final int MAX_TRY_COUNT = WordCondition.MAX_TRY_COUNT.getValue();
+    private static final int MAX_TRY_COUNT = WordCondition.MAX_TRY_COUNT.value();
 
     @Override
     public String makeWelcomeText() {

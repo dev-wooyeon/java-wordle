@@ -5,7 +5,7 @@ import wordle.domain.word.WordCondition;
 
 public class Game {
 
-    private static final int MAX_TRY_COUNT = WordCondition.MAX_TRY_COUNT.getValue();
+    private static final int MAX_TRY_COUNT = WordCondition.MAX_TRY_COUNT.value();
     private static final String CORRECT_ANSWER_LINE = MatchResult.getCorrectAnswerLine();
 
     private final GameResult gameResult;

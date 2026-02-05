@@ -7,7 +7,7 @@ import static java.util.Objects.isNull;
 
 public class InputValidator {
 
-    private static final int WORD_LENGTH = WordCondition.WORD_LENGTH.getValue();
+    private static final int WORD_LENGTH = WordCondition.WORD_LENGTH.value();
     private static final String ALPHABET_PATTERN = "(?i)[a-z]+";
 
     private final WordRepository wordRepository;

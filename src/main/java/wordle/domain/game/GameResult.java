@@ -13,7 +13,7 @@ public class GameResult {
     public void addBoard(MatchResult[] resultArray) {
         StringBuilder rowStringBuilder = new StringBuilder();
         for (MatchResult resultValue : resultArray) {
-            rowStringBuilder.append(resultValue.getValue());
+            rowStringBuilder.append(resultValue.value());
         }
         this.boardList.add(rowStringBuilder.toString());
     }
@@ -22,7 +22,7 @@ public class GameResult {
         if (boardList.isEmpty()) {
             return "";
         }
-        return boardList.get(boardList.size() - 1);
+        return boardList.getLast();
     }
 
     public int getTryCount() {

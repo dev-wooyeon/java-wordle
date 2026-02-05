@@ -7,7 +7,7 @@ public enum WordCondition {
 
     private final int value;
 
-    public int getValue() {
+    public int value() {
         return value;
     }
 

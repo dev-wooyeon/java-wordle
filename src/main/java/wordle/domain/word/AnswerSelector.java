@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class AnswerSelector {
 
-    private static final int WORD_LENGTH = WordCondition.WORD_LENGTH.getValue();
-    private static final int MAX_TRY_COUNT = WordCondition.MAX_TRY_COUNT.getValue();
+    private static final int WORD_LENGTH = WordCondition.WORD_LENGTH.value();
+    private static final int MAX_TRY_COUNT = WordCondition.MAX_TRY_COUNT.value();
     private static final int ANSWER_POOL_SIZE = WORD_LENGTH * MAX_TRY_COUNT;
 
     private final WordRepository wordRepository;

@@ -19,10 +19,10 @@ public class Word {
     }
 
     public ValidationStatus check(GameInput input) {
-        return validator.check(input.getInputValue());
+        return validator.check(input.value());
     }
 
     public MatchResult[] match(GameInput input) {
-        return comparator.compare(input.getInputValue(), answer.getValue());
+        return comparator.compare(input.value(), answer.value());
     }
 }

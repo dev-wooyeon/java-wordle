@@ -21,7 +21,7 @@ class ConsoleUITest {
     @Test
     void makeWelcomeText_시도_횟수_포함_검증() {
         // given
-        int expectedTryCount = WordCondition.MAX_TRY_COUNT.getValue();
+        int expectedTryCount = WordCondition.MAX_TRY_COUNT.value();
 
         // when
         String message = adapter.makeWelcomeText();

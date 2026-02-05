@@ -9,7 +9,7 @@ public enum MatchResult {
     GRAY("⬜"),
     ;
 
-    private static final String CORRECT_ANSWER_LINE = GREEN.getValue().repeat(WordCondition.WORD_LENGTH.getValue());
+    private static final String CORRECT_ANSWER_LINE = GREEN.value().repeat(WordCondition.WORD_LENGTH.value());
 
     private final String value;
 
@@ -17,7 +17,7 @@ public enum MatchResult {
         this.value = value;
     }
 
-    public String getValue() {
+    public String value() {
         return value;
     }
 
