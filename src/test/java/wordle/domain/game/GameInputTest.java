@@ -21,7 +21,7 @@ class GameInputTest {
     void constructor_and_getValue(String value) {
         GameInput input = new GameInput(value);
 
-        assertEquals(value, input.getInputValue());
+        assertEquals(value, input.value());
     }
 
     @ParameterizedTest(name = "{0}")
@@ -30,7 +30,7 @@ class GameInputTest {
     void constructor_nullValue_allowed(String value) {
         GameInput input = new GameInput(value);
 
-        assertNull(input.getInputValue());
+        assertNull(input.value());
     }
 
     @ParameterizedTest(name = "{0} = {1}: {2}")
@@ -92,8 +92,8 @@ class GameInputTest {
     void immutability_test() {
         GameInput input = new GameInput("apple");
 
-        String value1 = input.getInputValue();
-        String value2 = input.getInputValue();
+        String value1 = input.value();
+        String value2 = input.value();
 
         assertSame(value1, value2);
         assertEquals("apple", value1);

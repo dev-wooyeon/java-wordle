@@ -64,8 +64,8 @@ class AnswerTest {
     void immutability_test() {
         Answer answer = new Answer("apple");
 
-        String value1 = answer.getValue();
-        String value2 = answer.getValue();
+        String value1 = answer.value();
+        String value2 = answer.value();
 
         assertSame(value1, value2);
         assertEquals("apple", value1);
